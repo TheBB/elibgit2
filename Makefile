@@ -13,6 +13,13 @@ ifeq ($(UNAME),MSYS)
 	BUILD_OPTIONS+= -G "MSYS Makefiles"
 endif
 
+# If the variable USE_SYSTEM_LIBGIT2 is set to *any* value, use the
+# system provided libgit2 library.
+USE_SYSTEM_LIBGIT2? := \
+	$(if $(or $(USE_SYSTEM_LIBGIT2),\
+	 	  $(findstring USE_SYSTEM_LIBGIT2,$(BUILD_OPTIONS))),\
+		true)
+
 ifeq "$(TRAVIS)" "true"
 ## Makefile for Travis ###################################################
 #
@@ -87,7 +94,11 @@ submodule-update:
 	@git submodule update
 
 libgit2:
+ifeq ($(USE_SYSTEM_LIBGIT2?),)
 	@git submodule update --init
+else
+	@echo "Using the system provided libgit2 library"
+endif
 
 CLEAN  = $(ELCS) $(PKG)-autoloads.el build
 

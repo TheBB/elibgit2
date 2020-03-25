@@ -13,8 +13,13 @@ if(WIN32)
   set_target_properties(egit2 PROPERTIES PREFIX lib)
 endif(WIN32)
 
-target_link_libraries(egit2 git2)
-target_include_directories(egit2 SYSTEM PRIVATE "${libgit2_SOURCE_DIR}/include")
+if(USE_SYSTEM_LIBGIT2)
+  target_link_libraries(egit2 PRIVATE PkgConfig::git2)
+else()
+  target_link_libraries(egit2 git2)
+  target_include_directories(
+    egit2 SYSTEM PRIVATE "${libgit2_SOURCE_DIR}/include")
+endif()
 
 if(CMAKE_COMPILER_IS_GNUCC)
   target_compile_options(egit2 PRIVATE -Wall -Wextra)
