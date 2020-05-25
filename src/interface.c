@@ -358,6 +358,7 @@ MKSETFLAG(git_index_add_option_t, index_add_option);
 MKSETFLAG(git_merge_file_flag_t, merge_file_flag);
 MKSETFLAG(git_merge_flag_t, merge_flag);
 MKSETFLAG(git_sort_t, sort);
+MKSETFLAG(git_stash_flags, stash_flags);
 MKSETFLAG(git_status_opt_t, status_opt);
 
 #undef MKSETFLAG

@@ -362,6 +362,7 @@ setter em_setflag_index_add_option;
 setter em_setflag_merge_file_flag;
 setter em_setflag_merge_flag;
 setter em_setflag_sort;
+setter em_setflag_stash_flags;
 setter em_setflag_status_opt;
 
 bool em_setflags_list(void *out, emacs_env *env, emacs_value list, bool required, setter *setter);

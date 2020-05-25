@@ -170,6 +170,7 @@ emacs_value esym_index_typechange;
 emacs_value esym_insert;
 emacs_value esym_integerp;
 emacs_value esym_interhunk_lines;
+emacs_value esym_keep_index;
 emacs_value esym_last;
 emacs_value esym_length;
 emacs_value esym_libgit_annotated_commit_p;
@@ -663,6 +664,13 @@ esym_map esym_reset_map[4] = {
     {&esym_hard, {.reset = GIT_RESET_HARD}},
     {NULL, {0}}
 };
+esym_map esym_stash_flags_map[5] = {
+    {&esym_default, {.stash_flags = GIT_STASH_DEFAULT}},
+    {&esym_keep_index, {.stash_flags = GIT_STASH_KEEP_INDEX}},
+    {&esym_include_untracked, {.stash_flags = GIT_STASH_INCLUDE_UNTRACKED}},
+    {&esym_include_ignored, {.stash_flags = GIT_STASH_INCLUDE_IGNORED}},
+    {NULL, {0}}
+};
 esym_map esym_status_opt_map[17] = {
     {&esym_include_untracked, {.status_opt = GIT_STATUS_OPT_INCLUDE_UNTRACKED}},
     {&esym_include_ignored, {.status_opt = GIT_STATUS_OPT_INCLUDE_IGNORED}},
@@ -943,6 +951,7 @@ void esyms_init(emacs_env *env)
     esym_insert = env->make_global_ref(env, env->intern(env, "insert"));
     esym_integerp = env->make_global_ref(env, env->intern(env, "integerp"));
     esym_interhunk_lines = env->make_global_ref(env, env->intern(env, "interhunk-lines"));
+    esym_keep_index = env->make_global_ref(env, env->intern(env, "keep-index"));
     esym_last = env->make_global_ref(env, env->intern(env, "last"));
     esym_length = env->make_global_ref(env, env->intern(env, "length"));
     esym_libgit_annotated_commit_p = env->make_global_ref(env, env->intern(env, "libgit-annotated-commit-p"));

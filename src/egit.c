@@ -39,6 +39,7 @@
 #include "egit-revert.h"
 #include "egit-revwalk.h"
 #include "egit-signature.h"
+#include "egit-stash.h"
 #include "egit-status.h"
 #include "egit-submodule.h"
 #include "egit-tag.h"
@@ -782,6 +783,11 @@ void egit_init(emacs_env *env)
     DEFUN("libgit-signature-name", signature_name, 1, 1);
     DEFUN("libgit-signature-email", signature_email, 1, 1);
     DEFUN("libgit-signature-time", signature_time, 1, 1);
+
+    // Stash
+    DEFUN("libgit-stash-drop", stash_drop, 2, 2);
+    DEFUN("libgit-stash-foreach", stash_foreach, 2, 2);
+    DEFUN("libgit-stash-save", stash_foreach, 2, 4);
 
     // Status
     DEFUN("libgit-status-decode", status_decode, 1, 1);
