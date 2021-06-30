@@ -32,6 +32,11 @@
 (unless module-file-suffix
   (error "Module support not detected, libgit can't work"))
 
+(defcustom libgit-cmake-generator nil
+  "CMake generator to use."
+  :type 'string
+  :group 'libgit)
+
 (defvar libgit--root
   (file-name-directory (or load-file-name buffer-file-name))
   "Directory where libgit is installed.")
@@ -51,7 +56,9 @@ On successful exit, pass control on to the build step."
   (make-directory libgit--build-dir 'parents)
   (let ((default-directory libgit--build-dir))
     (set-process-sentinel
-     (start-process "libgit-cmake" "*libgit build*" "cmake" "..")
+     (if libgit-cmake-generator
+         (start-process "libgit-cmake" "*libgit build*" "cmake" ".." "-G" libgit-cmake-generator)
+       (start-process "libgit-cmake" "*libgit build*" "cmake" ".."))
      (lambda (proc _event)
        (when (eq 'exit (process-status proc))
          (if (= 0 (process-exit-status proc))
@@ -65,7 +72,7 @@ On successful exit, pass control on to the build step."
 On successful exit, pass control on to the load step."
   (let ((default-directory libgit--build-dir))
     (set-process-sentinel
-     (start-process "libgit-cmake" "*libgit build*" "make")
+     (start-process "libgit-cmake" "*libgit build*" "cmake" "--build" ".")
      (lambda (proc _event)
        (when (eq 'exit (process-status proc))
          (if (= 0 (process-exit-status proc))
